@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 	"sort"
@@ -8,8 +9,12 @@ import (
 	"strings"
 )
 
+var inputFile *string
+
 func main() {
-	data, err := os.ReadFile("/Users/maximilianhagen/Development/Camao/AoC2022/MaxHagen/day1/input.txt")
+	inputFile = flag.String("inputFile", "", "")
+	flag.Parse()
+	data, err := os.ReadFile(*inputFile)
 	if err != nil {
 		panic(err)
 	}
