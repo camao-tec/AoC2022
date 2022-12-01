@@ -13,4 +13,6 @@ Console.WriteLine(
             return list;
         })
         .Select(x => x.Sum())
-        .Max(x => x));
+        .OrderByDescending(x => x)
+        .Take(3)
+        .Sum(x => x));
