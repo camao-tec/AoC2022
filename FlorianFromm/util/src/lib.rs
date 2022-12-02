@@ -12,6 +12,16 @@ pub fn read_day1(path_to_file: Option<&str>) -> Result<Vec<Vec<i32>>> {
     }
 }
 
+pub fn read_day2(path_to_file: Option<&str>) -> Result<Vec<String>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    Ok(contents
+        .split('\n')
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_string())
+        .collect())
+}
+
 macro_rules! read_day1_tests {
   ($($label:ident: $input:expr, $expected_output:expr,)*) => {
   #[cfg(test)]
@@ -34,7 +44,7 @@ macro_rules! read_day1_tests {
 
 read_day1_tests! {
   read_day1_file:
-    Some("./input_day1.txt"),
+    Some("./examples/input_day1.txt"),
     vec![
       vec![1000, 2000, 3000],
       vec![4000],
