@@ -9,6 +9,8 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Inputs/day1.txt" />
+        <EmbeddedResource Include="Inputs/day2.txt" />
+        <EmbeddedResource Include="Inputs/day3.txt" />
     </ItemGroup>
 
 </Project>
