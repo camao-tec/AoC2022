@@ -19,7 +19,9 @@ public static class Helper
             "B" => new Paper(),
             "C" => new Sciccors()
         };
+    }
 }
+
 public class Rock : Shape
 {
     public Rock(): base("A", "Y", 1) { } 
