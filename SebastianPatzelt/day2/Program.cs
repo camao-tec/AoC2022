@@ -16,8 +16,11 @@ public static class Helper
         return s switch
         {
             "A" => new Rock(),
+            "X" => new Rock(),
             "B" => new Paper(),
-            "C" => new Sciccors()
+            "Y" => new Paper(),
+            "C" => new Sciccors(),
+            "Z" => new Sciccors()
         };
     }
 }
