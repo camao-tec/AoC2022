@@ -14,13 +14,13 @@ fn main() -> anyhow::Result<()> {
         .map(from_line_to_tokens)
         .collect::<anyhow::Result<Vec<(Token, Token)>>>()?;
 
-    println!("{:?}", values);
     println!(
-        "Score: {:?}",
+        "Score part one: {:?}",
         values.iter().map(calculate_score_part_one).sum::<i32>()
     );
+
     println!(
-        "Score: {:?}",
+        "Score part two: {:?}",
         values.iter().map(calculate_score_part_two).sum::<i32>()
     );
 
