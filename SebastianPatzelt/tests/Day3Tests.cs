@@ -33,5 +33,21 @@ CrZsJsPPZsGzwwsLwLmpwMDw";
             var sum = sampleInput.Split(Environment.NewLine).Select(x => x.ExtractItemTypePriority().Priority).Sum();
             Assert.Equal(157, sum);
         }
+
+        [Fact]
+        public void SumPriorityPartTwo_SampleInput_CalculatesCorrect()
+        {
+            var rucksacks = new[] {
+                "vJrwpWtwJgWrhcsFMMfFFhFp",
+                "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+                "PmmdzqPrVvPwwTWBwg",
+                "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+                "ttgJtRGJQctTZtZT",
+                "CrZsJsPPZsGzwwsLwLmpwMDw"
+            };
+
+            var sum = rucksacks.ExtractItemTypePriority();
+            Assert.Equal(70, sum);
+        }
     }
 }
