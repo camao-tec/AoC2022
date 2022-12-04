@@ -118,9 +118,12 @@ var fieldMap = map[string]int{
 	"Z": Z,
 }
 
+var inputFile *string
+
 func main() {
+	inputFile = flag.String("inputFile", "", "")
 	flag.Parse()
-	readFile, err := os.Open("/Users/maximilianhagen/Development/Camao/AoC2022/MaxHagen/day3/input.txt")
+	readFile, err := os.Open(*inputFile)
 	if err != nil {
 		fmt.Println(err)
 	}
