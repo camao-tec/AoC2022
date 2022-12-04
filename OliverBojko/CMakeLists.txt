@@ -3,4 +3,4 @@ project(OliverBojko)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(OliverBojko day3.cpp)
+add_executable(OliverBojko day4.cpp)
