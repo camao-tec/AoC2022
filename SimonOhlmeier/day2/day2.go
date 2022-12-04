@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-var file *string
-
 const (
 	RockOpponent     = "A"
 	PaperOpponent    = "B"
