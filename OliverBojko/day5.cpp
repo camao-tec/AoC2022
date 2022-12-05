@@ -13,7 +13,7 @@ int main()
 
     for (std::string line; std::getline(file, line);)
     {
-        if(!state)
+        if (!state)
         {
             if (line.empty())
             {
@@ -31,7 +31,8 @@ int main()
                 else
                     continue;
             }
-        } else
+        }
+        else
         {
             int c, f, t;
             sscanf(line.c_str(), "move %d from %d to %d", &c, &f, &t);
