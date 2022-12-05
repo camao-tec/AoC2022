@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"log"
 	"os"
 	"regexp"
@@ -9,8 +10,12 @@ import (
 	"time"
 )
 
+var inputFile *string
+
 func main() {
-	lines := GetLines("/Users/maximilianhagen/Development/Camao/AoC2022/MaxHagen/day5/input.txt")
+	inputFile = flag.String("inputFile", "", "")
+	flag.Parse()
+	lines := GetLines(*inputFile)
 	start := time.Now()
 	timeElapsed := time.Since(start)
 	log.Printf("Part1: %s Part2: %s Took: %dms", part1(lines, getStacks()), part2(lines, getStacks()), timeElapsed.Milliseconds())
