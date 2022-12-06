@@ -1,5 +1,5 @@
 use anyhow;
-use util::read_day2;
+use util::read_lines;
 
 #[derive(Debug)]
 enum Token {
@@ -9,7 +9,7 @@ enum Token {
 }
 
 fn main() -> anyhow::Result<()> {
-    let values = read_day2(Some("./input.txt".into()))?
+    let values = read_lines(Some("./input.txt".into()))?
         .into_iter()
         .map(from_line_to_tokens)
         .collect::<anyhow::Result<Vec<(Token, Token)>>>()?;
