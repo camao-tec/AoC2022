@@ -1,7 +1,7 @@
-use util::read_day2;
+use util::read_lines;
 
 fn main() -> anyhow::Result<()> {
-    let rucksacks = read_day2(Some("./input.txt"))?;
+    let rucksacks = read_lines(Some("./input.txt"))?;
 
     let sum_one = rucksacks
         .iter()

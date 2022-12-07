@@ -3,16 +3,13 @@ mod parse;
 use anyhow::Result;
 use std::fs::read_to_string;
 
-pub fn read_day1(path_to_file: Option<&str>) -> Result<Vec<Vec<i32>>> {
+pub fn read_string(path_to_file: Option<&str>) -> Result<String> {
     let file_path = path_to_file.unwrap_or("./input.txt");
-    let contents = read_to_string(file_path)?;
-    match parse::day1(&contents) {
-        Ok((_, values)) => Ok(values),
-        Err(err) => anyhow::bail!(err.to_string()),
-    }
+    let content = read_to_string(file_path)?;
+    Ok(content.chars().filter(|c| !c.is_whitespace()).collect())
 }
 
-pub fn read_day2(path_to_file: Option<&str>) -> Result<Vec<String>> {
+pub fn read_lines(path_to_file: Option<&str>) -> Result<Vec<String>> {
     let file_path = path_to_file.unwrap_or("./input.txt");
     let contents = read_to_string(file_path)?;
     Ok(contents
@@ -22,10 +19,37 @@ pub fn read_day2(path_to_file: Option<&str>) -> Result<Vec<String>> {
         .collect())
 }
 
+pub fn read_day1(path_to_file: Option<&str>) -> Result<Vec<Vec<i32>>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    match parse::day1(&contents) {
+        Ok((_, values)) => Ok(values),
+        Err(err) => anyhow::bail!(err.to_string()),
+    }
+}
+
 pub fn read_day4(path_to_file: Option<&str>) -> Result<Vec<((i32, i32), (i32, i32))>> {
     let file_path = path_to_file.unwrap_or("./input.txt");
     let contents = read_to_string(file_path)?;
     match parse::day4(&contents) {
+        Ok((_, values)) => Ok(values),
+        Err(err) => anyhow::bail!(err.to_string()),
+    }
+}
+
+pub fn read_day5(path_to_file: Option<&str>) -> Result<Vec<(i32, i32, i32)>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    match parse::day5(&contents) {
+        Ok((_, values)) => Ok(values),
+        Err(err) => anyhow::bail!(err.to_string()),
+    }
+}
+
+pub fn read_day8(path_to_file: Option<&str>) -> Result<Vec<()>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    match parse::day8(&contents) {
         Ok((_, values)) => Ok(values),
         Err(err) => anyhow::bail!(err.to_string()),
     }
