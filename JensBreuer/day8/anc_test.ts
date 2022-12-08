@@ -9,7 +9,7 @@ import {
 
 import { calculateHighestScenicScore, calculateVisibleTrees, getInputAsMatrix } from "./anc.ts"
 
-describe("AoC Day 7", () => {
+describe("AoC Day 8", () => {
     describe("Missing in Treehouse", () => {
         let matrix: number[][]
         
