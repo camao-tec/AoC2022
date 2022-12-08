@@ -3,6 +3,6 @@
 - get deno
   - https://deno.land/
 - test
-  - `deno test --allow-read aux_test.ts`
+  - `deno test --allow-read anc_test.ts`
 - run 
   - `$ deno run --allow-read main.ts`

@@ -1,4 +1,4 @@
-import { findSOMMarker, findSOPMarker, getInputLines } from "./aux.ts";
+import { findSOMMarker, findSOPMarker, getInputLines } from "./anc.ts";
 
 const seqs = await getInputLines("./input.txt")
 

@@ -1,4 +1,4 @@
-import { getInputLines } from "./aux.ts"
+import { getInputLines } from "./anc.ts"
 
 const sum = (a: number, b: number) => { return a + b }
 

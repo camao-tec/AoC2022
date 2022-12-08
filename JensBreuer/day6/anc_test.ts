@@ -7,7 +7,7 @@ import {
     it,
 } from "https://deno.land/std@0.167.0/testing/bdd.ts"
 
-import { getInputLines, findSOPMarker, findSOMMarker, dive } from "./aux.ts"
+import { getInputLines, findSOPMarker, findSOMMarker, dive } from "./anc.ts"
 
 describe("AoC Day 6", () => {
     describe("start-of-packet", () => {
