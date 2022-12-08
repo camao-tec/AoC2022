@@ -46,13 +46,17 @@ pub fn read_day5(path_to_file: Option<&str>) -> Result<Vec<(i32, i32, i32)>> {
     }
 }
 
-pub fn read_day8(path_to_file: Option<&str>) -> Result<Vec<()>> {
-    let file_path = path_to_file.unwrap_or("./input.txt");
-    let contents = read_to_string(file_path)?;
-    match parse::day8(&contents) {
-        Ok((_, values)) => Ok(values),
-        Err(err) => anyhow::bail!(err.to_string()),
-    }
+pub fn read_day8(path_to_file: Option<&str>) -> Result<Vec<Vec<i32>>> {
+    let content = read_lines(path_to_file)?;
+    let values = content
+        .into_iter()
+        .map(|line| {
+            line.chars()
+                .map(|c| (c.to_string()).parse::<i32>().unwrap())
+                .collect::<Vec<i32>>()
+        })
+        .collect::<Vec<Vec<i32>>>();
+    Ok(values)
 }
 
 macro_rules! read_day1_tests {
