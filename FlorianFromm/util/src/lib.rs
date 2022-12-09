@@ -59,6 +59,15 @@ pub fn read_day8(path_to_file: Option<&str>) -> Result<Vec<Vec<i32>>> {
     Ok(values)
 }
 
+pub fn read_day9(path_to_file: Option<&str>) -> Result<Vec<(char, i32)>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    match parse::day9(&contents) {
+        Ok((_, values)) => Ok(values),
+        Err(err) => anyhow::bail!(err.to_string()),
+    }
+}
+
 macro_rules! read_day1_tests {
   ($($label:ident: $input:expr, $expected_output:expr,)*) => {
   #[cfg(test)]
