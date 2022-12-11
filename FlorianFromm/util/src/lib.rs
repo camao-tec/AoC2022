@@ -1,7 +1,7 @@
 mod parse;
 
 use anyhow::Result;
-pub use parse::Instruction;
+pub use parse::{Instruction, Monkey, Operation};
 use std::fs::read_to_string;
 
 pub fn read_string(path_to_file: Option<&str>) -> Result<String> {
@@ -73,6 +73,15 @@ pub fn read_day10(path_to_file: Option<&str>) -> Result<Vec<Instruction>> {
     let file_path = path_to_file.unwrap_or("./input.txt");
     let contents = read_to_string(file_path)?;
     match parse::day10(&contents) {
+        Ok((_, values)) => Ok(values),
+        Err(err) => anyhow::bail!(err.to_string()),
+    }
+}
+
+pub fn read_day11(path_to_file: Option<&str>) -> Result<Vec<Monkey>> {
+    let file_path = path_to_file.unwrap_or("./input.txt");
+    let contents = read_to_string(file_path)?;
+    match parse::day11(&contents) {
         Ok((_, values)) => Ok(values),
         Err(err) => anyhow::bail!(err.to_string()),
     }
