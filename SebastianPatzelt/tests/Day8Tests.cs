@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace tests
 {
+
     public class Day8Tests
     {
         private const string input = @"30373
