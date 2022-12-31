@@ -3,6 +3,7 @@ using System.Text;
 
 internal class Program
 {
+    const char MIN_ELEVATION = 'a';
     const char MAX_ELEVATION = 'z';
     const char FINISH = 'E';
     const char START = 'S';
@@ -17,59 +18,100 @@ internal class Program
 
         var startPos = grid.IndexOf(START);
         var endPos = grid.IndexOf(FINISH);
-        //Console.ReadKey();
-        var res = FindPath(grid.ToCharArray(), lineLength, startPos, endPos);
-        Console.WriteLine(res);
+        // Console.ReadKey();
+
+        var startPos2 = new List<int>();
+        for (int i = grid.IndexOf('a'); i > -1; i = grid.IndexOf('a', i + 1))
+        {
+            if (i >= 0)
+                startPos2.Add(i);
+        }
+
+        var result2 = startPos2.Select(x =>
+        {
+            var res = FindPath(grid.ToCharArray(), lineLength, x, endPos);
+            var path = GetNodes(res);
+            return path;
+        })
+        .Where(x => x.Count > 0)
+        .ToList();
+
+        // result2.ForEach(path => Render(grid.ToCharArray(), path, lineLength, startPos, endPos));
+        var path = result2.MinBy(x => x.Count);
+        Render(grid.ToCharArray(), path, lineLength, path.First().Position, endPos);
+
+        // var res = FindPath(grid.ToCharArray(), lineLength, startPos, endPos);
+        // var path = GetNodes(res);
+        Console.WriteLine();
+        // Console.WriteLine(result2);
     }
 
-    private static int FindPath(char[] grid, int gridWidth, int startPos, int endPos)
+    private static LinkedList<Node> GetNodes(Node? start)
+    {
+        var res = new LinkedList<Node>();
+        while (start != null)
+        {
+            res.AddFirst(start);
+            start = start.Previous;
+        }
+        return res;
+    }
+
+    private static Node? FindPath(char[] grid, int gridWidth, int startPos, int endPos)
     {
         var closed = new HashSet<int>();
         var open = new Queue<Node>();
 
-        var start = new Node(startPos, 0, GetDistance(startPos, endPos, gridWidth));
+        var start = new Node(startPos, 0, GetDistance(startPos, endPos, gridWidth), MIN_ELEVATION);
         open.Enqueue(start);
 
         while (open.Count > 0)
         {
+            open = new Queue<Node>(open.OrderBy(x => x.F));
             var current = open.Dequeue();
+
+            // Render(grid, current.Position, open.Select(x => x.Position).ToHashSet(), closed, gridWidth);
+
+            closed.Add(current.Position);
             foreach (var direction in AllDirections)
             {
-                //Render(grid, visited, lineLength);
                 var nextPos = GetNextPosition(direction, current.Position, gridWidth, grid.Length);
                 // out of bounds
                 if (nextPos < 0)
                 {
                     continue;
                 }
-
+                // reached goal
+                if (grid[nextPos] == FINISH && grid[current.Position] >= MAX_ELEVATION - 1)
+                {
+                    return current;
+                }
                 //already visited
                 if (closed.Contains(nextPos))
                 {
                     continue;
                 }
-                // reached goal
-                if (grid[nextPos] == FINISH && grid[current.Position] >= MAX_ELEVATION - 1)
-                {
-                    return 0;
-                }
                 // you shall not pass
-                if (grid[current.Position] != START && grid[nextPos] != grid[current.Position] && grid[nextPos] != grid[current.Position] + 1)
+                if (grid[current.Position] != START && grid[nextPos] > grid[current.Position] + 1)
                 {
-                    closed.Add(nextPos);
+                    // closed.Add(nextPos);
                     continue;
                 }
 
-                open.Enqueue(new Node(nextPos, GetDistance(nextPos, startPos, gridWidth), GetDistance(nextPos, endPos, gridWidth)));
+                Node item = new(nextPos, GetDistance(nextPos, startPos, gridWidth), GetDistance(nextPos, endPos, gridWidth), grid[nextPos], current);
+                if (open.Contains(item))
+                {
+                    continue;
+                }
+                open.Enqueue(item);
             }
-            Render(grid, current.Position, open.Select(x => x.Position).ToHashSet(), gridWidth);
         }
-        return -1;
+        return null;
     }
 
     private static int GetDistance(int a, int b, int gridWidth)
     {
-        var hDistance = Math.Abs(a - b);
+        var hDistance = Math.Abs((a % gridWidth) - (b % gridWidth));
         var vDistance = Math.Abs((a / gridWidth) - (b / gridWidth));
         return hDistance + vDistance;
     }
@@ -116,40 +158,95 @@ internal class Program
         }
         return nextPos;
     }
-
-
-    public static void Render(char[] grid, int current, HashSet<int> open, int lineLength)
+    public static void Render(char[] grid, LinkedList<Node> nodes, int gridWidth, int startPos, int endPos)
     {
         Console.CursorVisible = false;
+        Console.SetWindowSize(gridWidth + 1, 50);
         Console.SetCursorPosition(0, 0);
         var sb = new StringBuilder();
         for (int i = 0; i < grid.Length; i++)
         {
-            if (i % lineLength == 0)
+            if (i % gridWidth == 0)
             {
                 sb.AppendLine();
             }
-            sb.Append(i == current ? "+" : open.Contains(i) ? "*" : ".");
+            if (nodes.Contains(new Node(i, 0, 0, ' ')) || i == startPos || i == endPos)
+            {
+                sb.Append(grid[i]);
+            }
+            else
+            {
+                sb.Append(".");
+            }
+
         }
         Console.Write(sb.ToString());
-        Console.ReadKey();
+        // Console.ReadKey();
+    }
+
+    public static void Render(char[] grid, int current, HashSet<int> open, HashSet<int> closed, int gridWidth)
+    {
+        Console.CursorVisible = false;
+        Console.SetWindowSize(gridWidth + 1, 50);
+        Console.SetCursorPosition(0, 0);
+        var sb = new StringBuilder();
+        for (int i = 0; i < grid.Length; i++)
+        {
+            if (i % gridWidth == 0)
+            {
+                sb.AppendLine();
+            }
+            if (open.Contains(i))
+            {
+                sb.Append(grid[i]);
+            }
+            else if (i == current)
+            {
+                sb.Append("+");
+            }
+            else
+            {
+                sb.Append(".");
+            }
+
+        }
+        Console.Write(sb.ToString());
+        Console.WriteLine();
+        Console.WriteLine($"Current Elevation: {grid[current]}");
+        // Console.ReadKey();
     }
 }
 
 
-struct Node
+class Node
 {
-    public Node(int position, int g, int h)
+    public Node(int position, int g, int h, char elevation, Node? previous = null)
     {
         Position = position;
         G = g;
         H = h;
+        Elevation = elevation;
+        Previous = previous;
     }
 
     public int Position { get; init; }
     public int G { get; init; }
     public int H { get; init; }
-    public int F => G + H;
+    public char Elevation { get; }
+    public Node? Previous { get; init; }
+
+    public double F => (G + H) / Elevation;
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Node node &&
+               Position == node.Position;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Position, G, H, F);
+    }
 }
 
 enum Directions
